@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_rtp_tax_return_p.u_popTaxReturnTypes</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>u_popTaxReturnTypes</name>
+        <script><![CDATA[var u_popTaxReturnTypes = Class.create();
+u_popTaxReturnTypes.prototype = {
+	initialize: function() {
+	},
+
+	u_popTaxReturnTypes:function() {
+		var rType = ' ';
+		var c = current.u_company;
+		var st = current.tax_state;
+		var curr_date = new GlideDate();
+		//return  everything if the assigned_to value is empty
+		if(!c || !st)
+			return;
+		//sys_user_grmember has the user to group relationship
+		var grp = new GlideRecord('x_rtp_tax_return_p_approver_matrix_sv');
+		grp.addQuery('tax_company',c);
+		grp.addQuery('tax_states',st);
+		grp.addQuery('u_active','=', 'true');    // additional check record being actve i.e. true
+		var gc=grp.addQuery('end_date', '>=', curr_date);// additional check end-date is grater than or equal to current data
+		gc.addOrCondition('end_date', '');
+		grp.query();
+		while(grp.next()) {
+			if (rType.length > 0) {
+			    //build a comma separated string of groups if there is more than one
+				rType += (',' + grp.tax_return_type.toString());
+			}
+			else {
+				rType = grp.grp.tax_return_type.toString();
+			}
+			
+		}
+		// return Groups where assigned to is in those groups we use IN for lists
+		return 'sys_idIN' + rType;
+	},
+	type: 'u_popTaxReturnTypes'
+};
+
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-06-16 19:33:34</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>1d71ef83db1fbe000713d5ab5e9619a4</sys_id>
+        <sys_mod_count>87</sys_mod_count>
+        <sys_name>u_popTaxReturnTypes</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_include_1d71ef83db1fbe000713d5ab5e9619a4</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-09-06 14:40:32</sys_updated_on>
+    </sys_script_include>
+</record_update>

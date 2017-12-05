@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field>tax_return_type</field>
+        <global>true</global>
+        <messages/>
+        <name>Tax - Populate Details from Matrix table</name>
+        <order/>
+        <script><![CDATA[function onChange(control, oldValue, newValue, isLoading, isTemplate) {
+	
+	if (isLoading || newValue == '') {
+		return;
+	}
+	if (newValue != oldValue && g_form.getValue('tax_return_type') != '') {
+		var taxCompany = g_form.getValue('u_company');
+		var taxState = g_form.getValue('tax_state');
+		var taxReturnType = g_form.getValue('tax_return_type');
+		var taxAjax = new GlideAjax('u_popTaxmatrixdetails');
+		taxAjax.addParam('sysparm_name', 'popTaxmatrixdetails');
+		taxAjax.addParam('sysparm_tax_company', taxCompany);
+		taxAjax.addParam('sysparm_tax_state', taxState);
+		taxAjax.addParam('sysparm_tax_returntype', taxReturnType);
+		taxAjax.getXML(getTaxDetails);
+	}
+	
+	function getTaxDetails(response) {
+		var answer = response.responseXML.documentElement.getAttribute("answer");
+		//alert("Matrix Values" +answer);
+		if (answer) {
+			var aa = answer.split(",");
+			var taxFreq = aa[0];
+			var taxDue = aa[1];
+			var firstApprover = aa[2];
+			var secondApprover = aa[3];
+			var stAbr = aa[4];
+			var bNo = aa[5];
+			var taxPreparer = aa[6];
+			g_form.setValue('tax_frequency', taxFreq);
+			g_form.setValue('tax_due_date', taxDue);
+			g_form.setValue('u_approved_by_manager', firstApprover);
+			g_form.setValue('u_approved_by_vp', secondApprover);
+			g_form.setValue('jurisdiction', stAbr);
+			g_form.setValue('bank_account_no', bNo);
+			g_form.setValue('tax_associate_responsible_for', taxPreparer);
+			
+		}
+		else{
+			g_form.setValue('tax_frequency', '');
+			g_form.setValue('tax_due_date', '');
+			g_form.setValue('u_approved_by_manager', '');
+			g_form.setValue('u_approved_by_vp', '');
+			g_form.setValue('jurisdiction', '');
+			g_form.setValue('bank_account_no', '');
+			g_form.setValue('tax_associate_responsible_for', '');
+		}
+		
+	}
+	   
+	}
+ ]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-06-19 16:00:05</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>b1bac244dba732400713d5ab5e961946</sys_id>
+        <sys_mod_count>36</sys_mod_count>
+        <sys_name>Tax - Populate Details from Matrix table</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_client_b1bac244dba732400713d5ab5e961946</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-11-01 14:02:15</sys_updated_on>
+        <table>x_rtp_tax_return_p_tpf_sv</table>
+        <type>onChange</type>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

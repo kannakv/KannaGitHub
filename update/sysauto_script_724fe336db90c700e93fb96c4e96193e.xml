@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>true</conditional>
+        <name>Tax Auto Creation - Bi Monthly-1st</name>
+        <run_as display_value="Kannadhasan Amirthalingam SoftVision Support">080a96c6db3e3a005bd3d5ab5e96198d</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2017-08-01 17:45:30</run_start>
+        <run_time>1970-01-01 07:10:00</run_time>
+        <run_type>monthly</run_type>
+        <script><![CDATA[// Create new Tax return based on the monthly
+var frequencySysID ='';
+var freqSysid = new GlideRecord('x_rtp_tax_return_p_frequency_sv');
+freqSysid.addQuery('tax_frequency', 'Bi Monthly-1st');
+freqSysid.query();
+while (freqSysid.next()){
+	frequencySysID = freqSysid.sys_id;
+}	
+var curr_date = new GlideDate();
+var tm = new GlideRecord('x_rtp_tax_return_p_approver_matrix_sv');
+tm.addQuery('u_active','true');
+tm.addQuery('tax_frequency', frequencySysID);
+var ed=tm.addQuery('end_date', '>=', curr_date); 
+ed.addOrCondition('end_date', '');
+tm.query(); 
+while (tm.next()) { 
+    var newTax = new GlideRecord('x_rtp_tax_return_p_tpf_sv');
+    newTax.initialize();
+    newTax.u_company = tm.tax_company;
+    newTax.tax_state = tm.tax_states;
+    newTax.tax_return_type = tm.tax_return_type;
+    newTax.tax_frequency = tm.tax_frequency;
+    newTax.tax_due_date = tm.tax_due_date;
+	newTax.u_approved_by_manager = tm.tax_first_level_approver;
+    newTax.u_approved_by_vp = tm.tax_second_level_approver;
+	newTax.u_stage = '1';
+	newTax.tax_associate_responsible_for = '';
+	newTax.jurisdiction = tm.tax_states.abbreviation;
+	newTax.bank_account_no = tm.bank_account_no;
+	newTax.tax_year = (new GlideDateTime()).getYearUTC();
+    newTax.setWorkflow(false);
+    newTax.insert();
+}
+
+]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-08-04 18:58:19</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>724fe336db90c700e93fb96c4e96193e</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Tax Auto Creation - Bi Monthly-1st</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sysauto_script_724fe336db90c700e93fb96c4e96193e</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-10-04 19:01:29</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

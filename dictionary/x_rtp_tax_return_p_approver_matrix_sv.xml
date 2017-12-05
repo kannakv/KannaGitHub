@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element audit="true" display="true" label="Tax Approver Matrix" max_length="40" name="x_rtp_tax_return_p_approver_matrix_sv" type="collection">
+        <element choice="1" label="Bank Account No" max_length="32" name="bank_account_no" type="string">
+            <choice>
+                <element label="0283 - METROPLEX" value="0283 - METROPLEX"/>
+                <element label="0341 - ENERGY DISPATCH" value="0341 - ENERGY DISPATCH"/>
+                <element label="3139 - RACETRAC/CB PROPERTIES" value="3139 - RACETRAC/CB PROPERTIES"/>
+            </choice>
+        </element>
+        <element label="End Date" max_length="40" name="end_date" type="glide_date"/>
+        <element display="true" label="Tax Company" max_length="32" name="tax_company" reference="x_rtp_tax_return_p_companies_sv" type="reference"/>
+        <element label="Due Date" max_length="40" name="tax_due_date" type="string"/>
+        <element label="Tax First Level Approver" max_length="32" name="tax_first_level_approver" reference="x_rtp_tax_return_p_first_level_approval_sv" type="reference"/>
+        <element label="Frequency" max_length="40" name="tax_frequency" reference="x_rtp_tax_return_p_frequency_sv" type="reference"/>
+        <element label="Tax Preparer" max_length="32" name="tax_preparer" reference="sys_user" reference_qual="roles=x_rtp_tax_return_p.tax_process_flow_user^EQ" reference_qual_condition="roles=x_rtp_tax_return_p.tax_process_flow_user^EQ" type="reference"/>
+        <element label="Return Type" max_length="40" name="tax_return_type" reference="x_rtp_tax_return_p_return_type_sv" type="reference"/>
+        <element label="Tax Second Level Approver" max_length="32" name="tax_second_level_approver" reference="x_rtp_tax_return_p_second_level_approver_sv" type="reference"/>
+        <element label="Tax States" max_length="32" name="tax_states" reference="x_rtp_tax_return_p_tax_states_sv" type="reference"/>
+        <element default="true" label="Active" max_length="40" name="u_active" type="boolean"/>
+        <index name="index">
+            <element name="tax_return_type"/>
+        </index>
+        <index name="index2">
+            <element name="tax_company"/>
+        </index>
+        <index name="index3">
+            <element name="tax_states"/>
+        </index>
+        <index name="index4">
+            <element name="tax_preparer"/>
+        </index>
+        <index name="index5">
+            <element name="tax_first_level_approver"/>
+        </index>
+        <index name="index6">
+            <element name="tax_frequency"/>
+        </index>
+        <index name="index7">
+            <element name="tax_second_level_approver"/>
+        </index>
+    </element>
+</database>

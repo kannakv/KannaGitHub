@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_rtp_tax_return_p.taxOnBaseUtils</api_name>
+        <client_callable>true</client_callable>
+        <description>Script include used in onBase-ServiceNow document management integration</description>
+        <name>taxOnBaseUtils</name>
+        <script><![CDATA[var taxOnBaseUtils = Class.create();
+
+taxOnBaseUtils.canUploadDoc = function(current){
+	if ((current.number.u_stage == 9) && (taxOnBaseUtils.isDocAvailable(current.sys_id)))
+	{
+		return true;
+	}
+	return false;
+};
+
+taxOnBaseUtils.canSendDoc = function(current){
+//if ((taxOnBaseUtils.isAssetAvailable(current.contract)) && (taxOnBaseUtils.isAssetLocAvailable(current.contract))){
+//if ((taxOnBaseUtils.isAssetAvailable(current.contract)) ){
+		return true;
+//	}
+//	return false;
+};
+
+
+/*taxOnBaseUtils.canRetrieveDoc = function(current){
+	if (((current.contract.state == 2) || (current.contract.state == 5)) && (current.u_onbase_state == 'Submitted') &&
+		(taxOnBaseUtils.isAssetAvailable(current.contract)) && (taxOnBaseUtils.isAssetLocAvailable(current.contract))) {
+		return true;
+	}
+	return false;
+};
+
+taxOnBaseUtils.isAssetAvailable = function(sysID){
+	var gr = new GlideRecord("x_nuvo_eam_asset_contract");
+	gr.addQuery("contract", sysID);
+	gr.query();
+	//gs.info("***** isAssetAvailable : "+gr.getEncodedQuery()+" ==> "+gr.getRowCount()+" *****");
+	if (gr.next()){
+		return true;
+	}
+	return false;
+};
+
+taxOnBaseUtils.isAssetLocAvailable = function(sysID){
+	var gr = new GlideRecord("x_nuvo_eam_asset_contract");
+	gr.addQuery("contract", sysID);
+	gr.query();
+	//gs.info("***** isAssetLocAvailable : "+gr.getEncodedQuery()+" ==> "+gr.getRowCount()+" *****");
+	if (gr.next()) {
+		if (gr.asset.space.name != ''){
+			return true;
+		}
+	}
+	return false;
+};*/
+
+taxOnBaseUtils.isDocAvailable = function(sysID){
+	//var gr = new GlideRecord("sys_attachment");
+	var gr = new GlideRecord("x_rtp_tax_return_p_tax_documents");
+	//gr.addQuery("table_name", "x_rtp_tax_return_p_tax_documents");
+	//gr.addQuery("table_sys_id", sysID);
+	gr.addQuery("sys_id", sysID);
+	gr.query();
+	//gs.info("***** isDocAvailable : "+gr.getEncodedQuery()+" ==> "+gr.getRowCount()+" *****");
+	if (gr.next()) {
+		return true;
+	}
+	return false;
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-07-17 21:53:57</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>bbdae381db4c8f000713d5ab5e9619e4</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>taxOnBaseUtils</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_include_bbdae381db4c8f000713d5ab5e9619e4</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-10-04 17:05:29</sys_updated_on>
+    </sys_script_include>
+</record_update>

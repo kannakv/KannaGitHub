@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <conditions table="x_rtp_tax_return_p_tpf_sv">tax_return_typeISEMPTY^EQ<item endquery="false" field="tax_return_type" goto="false" newquery="false" operator="ISEMPTY" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <reverse_if_false>true</reverse_if_false>
+        <run_scripts>true</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+	var frmSections = g_form.getSections();
+	g_form.setSectionDisplay('general_info',true);
+	g_form.setSectionDisplay('approvals_required',true);
+	g_form.setSectionDisplay('activity_log',true);
+	g_form.setSectionDisplay('onbase_keywords',true);
+	g_form.setSectionDisplay('tax_process_flow',false);
+	g_form.setSectionDisplay('glaccount_info',true);
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+	var frmSections = g_form.getSections();
+	g_form.setSectionDisplay('general_info',false);
+	g_form.setSectionDisplay('approvals_required',false);
+	g_form.setSectionDisplay('activity_log',false);
+	g_form.setSectionDisplay('onbase_keywords',false);
+	g_form.setSectionDisplay('tax_process_flow',false);
+	g_form.setSectionDisplay('glaccount_info',false);
+}]]></script_true>
+        <set_values/>
+        <short_description>Tax - Show/hide fields based on initial values</short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-06-14 16:30:12</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9e04e0eedb977e000713d5ab5e96194d</sys_id>
+        <sys_mod_count>44</sys_mod_count>
+        <sys_name>Tax - Show/hide fields based on initial values</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_ui_policy_9e04e0eedb977e000713d5ab5e96194d</sys_update_name>
+        <sys_updated_by>v-hemanthsiramdasu</sys_updated_by>
+        <sys_updated_on>2017-11-21 15:33:16</sys_updated_on>
+        <table>x_rtp_tax_return_p_tpf_sv</table>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_ui_policy>
+</record_update>

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="return_type" table="x_rtp_tax_return_p_tpf_sv" version="3">
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Supplier</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>1</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:10:44</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fd5c0848db41c700e93fb96c4e961936</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:10:55</sys_updated_on>
+            <value>Supplier</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Wholesaler</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>2</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:11:03</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>096c8848db41c700e93fb96c4e961929</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:11:11</sys_updated_on>
+            <value>Wholesaler</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Importer</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>3</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:11:20</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>197c8880db81c700e93fb96c4e9619ee</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:11:28</sys_updated_on>
+            <value>Importer</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Exporter</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>4</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:11:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>918c8848db41c700e93fb96c4e96192a</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:11:44</sys_updated_on>
+            <value>Exporter</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Distributor</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>5</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:11:51</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>cd9c4c80db81c700e93fb96c4e96197c</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:12:01</sys_updated_on>
+            <value>Distributor</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Environmental</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>6</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:12:09</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f4ac0880db81c700e93fb96c4e96197e</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:12:16</sys_updated_on>
+            <value>Environmental</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Inspection Fee</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>7</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:12:23</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>51bc0880db81c700e93fb96c4e96197f</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:12:29</sys_updated_on>
+            <value>Inspection Fee</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Load Fee</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>8</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:12:37</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e8cc0880db81c700e93fb96c4e96197f</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:12:44</sys_updated_on>
+            <value>Load Fee</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Dealer</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>9</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:12:52</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>14dc4c80db81c700e93fb96c4e9619c4</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:12:59</sys_updated_on>
+            <value>Dealer</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>First Receiver</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>10</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:13:08</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ccec4c80db81c700e93fb96c4e961916</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:13:22</sys_updated_on>
+            <value>First Receiver</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Petro Business Tax</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>11</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:13:30</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ffec4c80db81c700e93fb96c4e96196a</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:13:38</sys_updated_on>
+            <value>Petro Business Tax</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Blender</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>12</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:13:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>490d4c80db81c700e93fb96c4e96196b</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:13:54</sys_updated_on>
+            <value>Blender</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Fuel Vendor</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>13</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:13:56</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>0d1d80c0db81c700e93fb96c4e961966</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:14:20</sys_updated_on>
+            <value>Fuel Vendor</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Sales</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>14</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:14:26</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>231dc0c0db81c700e93fb96c4e9619a6</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:14:35</sys_updated_on>
+            <value>Sales</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Federal 720</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>15</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:14:48</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>0f3d4c80db81c700e93fb96c4e96199f</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:14:56</sys_updated_on>
+            <value>Federal 720</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Federal 2290</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>16</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:15:04</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b74dc8c0db81c700e93fb96c4e961958</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:15:17</sys_updated_on>
+            <value>Federal 2290</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Seawall</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>17</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:15:33</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d46d00c0db81c700e93fb96c4e961991</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:15:44</sys_updated_on>
+            <value>Seawall</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Airport Safety Fund</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>18</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:15:53</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>177d0cc0db81c700e93fb96c4e9619ff</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:16:01</sys_updated_on>
+            <value>Airport Safety Fund</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Gross Receipts</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>19</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:16:09</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c09d0404db81c700e93fb96c4e9619aa</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:16:19</sys_updated_on>
+            <value>Gross Receipts</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>EIA-821</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>20</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:16:28</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>339dc804db81c700e93fb96c4e9619b8</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:16:35</sys_updated_on>
+            <value>EIA-821</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>return_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>EIA-817</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>21</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:16:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e8bd0404db81c700e93fb96c4e9619ab</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:16:53</sys_updated_on>
+            <value>EIA-817</value>
+        </sys_choice>
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>return_type</element>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-09-01 20:10:44</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>35e3b78cdb754f005bd3d5ab5e961940</sys_id>
+            <sys_mod_count>63</sys_mod_count>
+            <sys_name>return_type</sys_name>
+            <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+            <sys_update_name>sys_choice_x_rtp_tax_return_p_tpf_sv_return_type</sys_update_name>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-09-01 20:16:50</sys_updated_on>
+        </sys_choice_set>
+    </sys_choice>
+</record_update>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="tax_type" table="x_rtp_tax_return_p_tpf_sv" version="3">
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>tax_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Excise</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>1</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-08-29 19:32:18</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>96c6a047db7c0700e93fb96c4e961921</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-08-29 19:32:26</sys_updated_on>
+            <value>excise</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>tax_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Sales</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>2</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-08-29 19:32:35</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e4d66c07db7c0700e93fb96c4e9619d6</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-08-29 19:32:51</sys_updated_on>
+            <value>sales</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>tax_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Prepaid Sales</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>3</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-08-29 19:32:57</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e4e664c7db7c0700e93fb96c4e961990</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-08-29 19:33:15</sys_updated_on>
+            <value>prepaid_sales</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>tax_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Gross Receipts</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sequence>4</sequence>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-08-29 19:33:24</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>06f664c7db7c0700e93fb96c4e9619bc</sys_id>
+            <sys_mod_count>2</sys_mod_count>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-08-29 19:33:38</sys_updated_on>
+            <value>gross_receipts</value>
+        </sys_choice>
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>tax_type</element>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+            <sys_created_on>2017-08-29 19:32:18</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_id>06e3f78cdb754f005bd3d5ab5e961915</sys_id>
+            <sys_mod_count>11</sys_mod_count>
+            <sys_name>tax_type</sys_name>
+            <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+            <sys_update_name>sys_choice_x_rtp_tax_return_p_tpf_sv_tax_type</sys_update_name>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-08-29 19:33:34</sys_updated_on>
+        </sys_choice_set>
+    </sys_choice>
+</record_update>

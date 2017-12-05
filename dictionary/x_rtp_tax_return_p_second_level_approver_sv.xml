@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Tax Second Level Approver" max_length="40" name="x_rtp_tax_return_p_second_level_approver_sv" type="collection">
+        <element display="true" label="Tax Second Level Approver" max_length="32" name="tax_second_level_approver" reference="sys_user" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
+        <index name="index">
+            <element name="tax_second_level_approver"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="u_first_level_approver" label="First Level Approver" language="en" table="x_rtp_tax_return_p_tax_process_details">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>u_first_level_approver</element>
+            <help/>
+            <hint/>
+            <label>First Level Approver</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tax_process_details</name>
+            <plural>First Level Approvers</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>acarver</sys_created_by>
+            <sys_created_on>2017-08-07 14:29:12</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_id>0e7e46f7db1ccb00d85530cf9d961935</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>First Level Approver</sys_name>
+            <sys_package display_value="Global" source="global">global</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+            <sys_update_name>sys_documentation_x_rtp_tax_return_p_tax_process_details_u_first_level_approver_en</sys_update_name>
+            <sys_updated_by>acarver</sys_updated_by>
+            <sys_updated_on>2017-08-07 14:29:12</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

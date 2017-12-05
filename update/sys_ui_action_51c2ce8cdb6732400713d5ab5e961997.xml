@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name>reject_return</action_name>
+        <active>true</active>
+        <client>true</client>
+        <comments>Button to reject the Tax return</comments>
+        <condition>(gs.hasRole('x_rtp_tax_return_p.first_level_approval_user') || gs.hasRole('x_rtp_tax_return_p.second_level_approver_user')) &amp;&amp; current.u_stage != 9;</condition>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_style/>
+        <hint/>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <name>Reject Return</name>
+        <onclick>rejectReturn()</onclick>
+        <order>100</order>
+        <script><![CDATA[function rejectReturn(){
+	var answer;
+	answer = confirm('Are you sure you want to REJECT this tax return? If yes, you will need to add an additional comment explaining the reason you are rejecting the return.');
+	if(answer==true){
+		//g_form.showFieldMsg('u_additional_comments',' Additional comments are mandatory when reject tax return.','error');
+		
+		g_form.setMandatory('u_additional_comments', true);
+		//g_form.setValue('u_stage', 6);
+		//g_form.setValue('u_additional_comments', 'Rejected');
+	}else
+	{
+		return false;
+	}
+	//Call the UI Action and skip the 'onclick' function
+	gsftSubmit(null, g_form.getFormElement(), 'reject_return'); //MUST call the 'Action name' set in this UI Action
+}
+if(typeof window == 'undefined')
+	rejectRet();
+
+function rejectRet(){
+	var assignTo = current.tax_associate_responsible_for.getDisplayValue();
+	current.u_rejected_by_manager = gs.getUserID();
+	current.u_rejected_by_vp = gs.getUserID();
+	current.assigned_to = assignTo;
+	current.u_stage = 6;
+	gs.eventQueue('x_rtp_tax_return_p.tax_rejected', current, gs.getUserID(), gs.getUserName());
+	current.update();
+}
+//action.setRedirectURL(current);]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>v-ArunVenkatachalam</sys_created_by>
+        <sys_created_on>2017-06-19 15:15:43</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>51c2ce8cdb6732400713d5ab5e961997</sys_id>
+        <sys_mod_count>53</sys_mod_count>
+        <sys_name>Reject Return</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_ui_action_51c2ce8cdb6732400713d5ab5e961997</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-10-03 15:24:28</sys_updated_on>
+        <table>x_rtp_tax_return_p_tpf_sv</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>

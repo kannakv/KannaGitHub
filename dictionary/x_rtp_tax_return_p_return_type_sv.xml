@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Tax Return Type" max_length="40" name="x_rtp_tax_return_p_return_type_sv" type="collection">
+        <element display="true" label="Tax Return Type" max_length="200" name="tax_return_type" type="string"/>
+    </element>
+</database>

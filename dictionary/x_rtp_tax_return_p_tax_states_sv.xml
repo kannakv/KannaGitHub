@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Tax States" max_length="40" name="x_rtp_tax_return_p_tax_states_sv" type="collection">
+        <element label="Abbreviation" max_length="10" name="abbreviation" type="string"/>
+        <element display="true" label="Tax State" max_length="40" name="tax_state" type="string"/>
+    </element>
+</database>

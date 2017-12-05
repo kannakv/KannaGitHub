@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update>
+    <sys_documentation element="u_all_tax_returns_completed" label="Tax return completed" language="en" table="x_rtp_tax_return_p_tpf_sv">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>u_all_tax_returns_completed</element>
+            <help/>
+            <hint/>
+            <label>Tax return completed</label>
+            <language>en</language>
+            <name>x_rtp_tax_return_p_tpf_sv</name>
+            <plural>Tax return completed</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>v-ArunVenkatachalam</sys_created_by>
+            <sys_created_on>2017-06-07 16:44:26</sys_created_on>
+            <sys_customer_update>true</sys_customer_update>
+            <sys_id>cc7464d8db937a000713d5ab5e96193d</sys_id>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_name>Tax return completed</sys_name>
+            <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+            <sys_update_name>sys_documentation_x_rtp_tax_return_p_tpf_sv_u_all_tax_returns_completed_en</sys_update_name>
+            <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+            <sys_updated_on>2017-06-16 15:42:34</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

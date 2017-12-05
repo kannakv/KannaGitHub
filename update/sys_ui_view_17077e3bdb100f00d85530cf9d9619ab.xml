@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_view">
+    <sys_ui_view action="INSERT_OR_UPDATE">
+        <group/>
+        <hidden>false</hidden>
+        <name>RPT17e78823db80c3400713d5ab5e96192b</name>
+        <roles/>
+        <sys_class_name>sys_ui_view</sys_class_name>
+        <sys_created_by>tcurry_admin</sys_created_by>
+        <sys_created_on>2017-08-07 17:26:30</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>17077e3bdb100f00d85530cf9d9619ab</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package/>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name/>
+        <sys_updated_by>tcurry_admin</sys_updated_by>
+        <sys_updated_on>2017-08-07 17:26:30</sys_updated_on>
+        <title>Rpt17e78823db80c3400713d5ab5e96192b</title>
+        <user/>
+    </sys_ui_view>
+</record_update>

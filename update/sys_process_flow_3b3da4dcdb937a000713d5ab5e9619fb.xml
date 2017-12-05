@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_process_flow">
+    <sys_process_flow action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition table="x_rtp_tax_return_p_tpf_sv">u_stage=4^EQ<item endquery="false" field="u_stage" goto="false" newquery="false" operator="=" or="false" value="4"/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </condition>
+        <description/>
+        <label>2nd Approval</label>
+        <name>Second Level Approval </name>
+        <order>4</order>
+        <sys_class_name>sys_process_flow</sys_class_name>
+        <sys_created_by>v-ArunVenkatachalam</sys_created_by>
+        <sys_created_on>2017-06-07 17:23:10</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>3b3da4dcdb937a000713d5ab5e9619fb</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>Second Level Approval </sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_process_flow_3b3da4dcdb937a000713d5ab5e9619fb</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-08-11 17:43:10</sys_updated_on>
+        <table>x_rtp_tax_return_p_tpf_sv</table>
+    </sys_process_flow>
+</record_update>

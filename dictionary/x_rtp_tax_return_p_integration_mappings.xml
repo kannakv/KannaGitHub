@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Tax Integration Mappings" max_length="40" name="x_rtp_tax_return_p_integration_mappings" type="collection">
+        <element dependent="u_source_table" dependent_on_field="u_source_table" label="Dependent Source Field" max_length="100" name="dependent_source_field" type="field_name" use_dependent_field="true"/>
+        <element label="Active" max_length="40" name="u_active" type="boolean"/>
+        <element choice="1" display="true" label="Application" max_length="32" name="u_application" reference="sys_soap_message" type="reference">
+            <choice/>
+        </element>
+        <element label="Custom Source Field" max_length="100" name="u_custom_source_field" type="string"/>
+        <element label="Default" max_length="40" name="u_default" type="boolean"/>
+        <element label="Dependent" max_length="40" name="u_dependent" type="boolean"/>
+        <element dependent="u_dependent_table" dependent_on_field="u_dependent_table" label="Dependent Field" max_length="100" name="u_dependent_field" type="field_name" use_dependent_field="true"/>
+        <element attributes="base_start=true" label="Dependent Table" max_length="80" name="u_dependent_table" type="table_name"/>
+        <element dependent="u_source_table" dependent_on_field="u_source_table" label="Source Field" max_length="100" name="u_source_field" type="field_name" use_dependent_field="true"/>
+        <element label="Source Table" max_length="100" name="u_source_table" type="table_name"/>
+        <element label="Source Value" max_length="100" name="u_source_value" type="string"/>
+        <element label="Target Field" max_length="32" name="u_target_field" reference="x_rtp_tax_return_p_integration_variables" type="reference"/>
+        <element label="Target Table" max_length="32" name="u_target_table" reference="sys_soap_message_function" reference_qual="javascript:&quot;soap_message=&quot;+current.u_application" type="reference" use_reference_qualifier="advanced"/>
+        <element label="Target Value" max_length="100" name="u_target_value" type="string"/>
+        <element choice="1" label="Type" max_length="40" name="u_type" type="choice">
+            <choice>
+                <element label="Inbound" value="Inbound"/>
+                <element label="Outbound" value="Outbound"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="u_target_field"/>
+        </index>
+        <index name="index2">
+            <element name="u_application"/>
+        </index>
+        <index name="index3">
+            <element name="u_target_table"/>
+        </index>
+    </element>
+</database>

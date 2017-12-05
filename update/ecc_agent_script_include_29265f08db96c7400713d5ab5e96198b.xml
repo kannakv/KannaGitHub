@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="ecc_agent_script_include">
+    <ecc_agent_script_include action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <name>UploadOnBaseAttachmentTax</name>
+        <script><![CDATA[var UploadOnBaseAttachmentTax = Class.create();
+UploadOnBaseAttachmentTax.prototype = {
+		initialize: function(){
+		this.StringUtil = Packages.com.glide.util.StringUtil;
+		//this.String = Packages.java.lang.String;
+		//this.Runtime = Packages.java.lang.Runtime;
+		//this.ByteArrayOutputStream = Packages.java.io.ByteArrayOutputStream;
+		this.URL = Packages.java.net.URL;
+		this.Base64 = Packages.java.util.Base64;
+		this.ioUtils = Packages.org.apache.commons.io.IOUtils;
+		//this.MessageFactory = Packages.javax.xml.soap.MessageFactory;
+		//this.QName = Packages.javax.xml.namespace.QName;
+		this.StringEscapeUtils = Packages.org.apache.commons.lang3.StringEscapeUtils;
+		this.username = probe.getParameter('username');
+		this.password = probe.getParameter('password');
+		this.attachmentURL = probe.getParameter('attachmentURL');
+		this.mappings = probe.getParameter("mappings");
+		this.onBaseUsername = probe.getParameter('onBaseUsername');
+		this.onBasePassword = probe.getParameter('onBasePassword');
+		this.endpoint = probe.getParameter('endpoint');
+		this.action = probe.getParameter('action');
+		this.requestBody = probe.getParameter('requestBody');
+	},
+	
+	fileUpload:function(){
+		/* commenting Runtime variables
+		var totalMemory = this.Runtime.getRuntime().totalMemory();
+		var freeMemory = this.Runtime.getRuntime().freeMemory();
+		var maxMemory = this.Runtime.getRuntime().maxMemory();
+		var usedMemory = totalMemory - freeMemory;
+		var totalFreeMemory = maxMemory - usedMemory;
+		probe.createElement("totalMemory", totalMemory);
+		probe.createElement("freeMemory", freeMemory);
+		probe.createElement("maxMemory", maxMemory);
+		probe.createElement("usedMemory", usedMemory);
+		probe.createElement("totalFreeMemory", totalFreeMemory);
+		this.Runtime.getRuntime().gc();
+		*/
+		var authData = this.username + ":" + this.password;
+		var authEncData = this.StringUtil.base64Encode(authData);
+		var urlObj = new this.URL(this.attachmentURL);
+		var urlConnObj = urlObj.openConnection();
+		urlConnObj.setRequestMethod("GET");
+		urlConnObj.setRequestProperty("Authorization", "Basic " + authEncData);
+		urlConnObj.setRequestProperty("Content-Type", "application/json");
+		urlConnObj.setRequestProperty("charset", "utf-8");
+		urlConnObj.setUseCaches(false);
+		urlConnObj.setDoOutput(true);
+		urlConnObj.connect();
+		var is = urlConnObj.getInputStream();
+		this._log("input stream   "+is);
+		var resultBase64Encoded = "";
+		try{
+			var result = this.ioUtils.toString(is, "ISO-8859-1");//UTF-8
+			resultBase64Encoded = this.Base64.getEncoder().encodeToString(result.getBytes("ISO-8859-1"));
+			//this.ioUtils.close(urlConnObj);
+			}
+		catch(e){
+			probe.createElement("EncodingException", e);
+		}
+		try{
+			var authData1 = this.onBaseUsername + ":" + this.onBasePassword;
+			var authEncData1 = this.StringUtil.base64Encode(authData1);
+			this.postMethod = new Packages.org.apache.commons.httpclient.methods.PostMethod(this.endpoint);
+			this.postMethod.setRequestHeader("Content-Type", "text/xml; charset=UTF-8");
+			this.postMethod.setRequestHeader("Authorization", "Basic " + authEncData1);
+			this.postMethod.setRequestHeader("SoapAction", this.action);
+			this.postMethod.setRequestBody(this._parseBody(this.requestBody, resultBase64Encoded));
+			this.HttpClient = new Packages.org.apache.commons.httpclient.HttpClient();
+			var responseCode = this.HttpClient.executeMethod(this.postMethod);
+			var responseBody = this.postMethod.getResponseBodyAsString();
+			probe.createElement("responseCode", responseCode);
+			probe.createElement("responseBody", responseBody);
+			//this._log("resultBase64Encoded: "+resultBase64Encoded);
+			this.postMethod.releaseConnection();
+			this._log(" Response body is..."+responseBody);
+			}
+		catch(er){
+			probe.createElement("SOAPRequestException", er);
+		}
+	},
+	
+	_parseBody: function(requestBody, base64EncodedData){
+		var rBody = requestBody.toString();
+		this._log('base64EncodedData will replace FileData');
+		rBody = rBody.replace("$FileData$", base64EncodedData);
+		//probe.createElement("rBody", rBody);
+		return rBody;
+	},
+	
+	//Escape the special characters in request body - to edit and include - declared in ln 14 - check if unescapeXml
+	_escapeString : function(requestBody){
+		var StringEscapeUtils = this.StringEscapeUtils;
+		var finalStr = StringEscapeUtils.escapeXml(requestBody);
+	},
+	
+	/*
+	_wrapQuotes : function (str) {
+		if (str !== null)
+			str = "\"" + str.trim().replace(/^"/, "").replace(/"$/, "") + "\"";
+
+		return str;
+	},
+	*/
+	
+	/*commenting
+	_createSOAPRequest: function(resultBase64Encoded){
+		try {
+			var mappings = this.mappings;
+			var parser = new JSONParser();
+			var parsedMappings = parser.parse(mappings);
+			var messageFactory = this.MessageFactory.newInstance();
+			var soapMessage = messageFactory.createMessage();
+			soapMessage.getSOAPHeader().setPrefix("soapenv");
+			soapMessage.getSOAPBody().setPrefix("soapenv");
+			var soapPart = soapMessage.getSOAPPart();
+			var envelope = soapPart.getEnvelope();
+			envelope.setPrefix("soapenv");
+			envelope.addNamespaceDeclaration("tem", "http://tempuri.org/");
+			envelope.addNamespaceDeclaration("ser", "http://schemas.datacontract.org/2004/07/ServiceNow_OnbaseService");
+			envelope.removeNamespaceDeclaration("SOAP-ENV");
+			var soapBody = envelope.getBody();
+			var qns = new this.QName("", "UploadNewFile", "tem");
+			var soapBodyElement = soapBody.addBodyElement(qns);
+			var qns1 = new this.QName("file");
+			var soapElement = soapBodyElement.addChildElement(qns1);
+			for (var key in parsedMappings){
+				var soapElement1 = soapElement.addChildElement(key);
+				if (key != 'FileData'){
+					soapElement1.addTextNode(parsedMappings[key]);
+				}
+				else{
+					soapElement1.addTextNode(resultBase64Encoded);//resultBase64Encoded
+				}
+			}
+			soapMessage.saveChanges();
+			var bo = new this.ByteArrayOutputStream();
+			soapMessage.writeTo(bo);
+			probe.createElement("bo", new this.String(bo.toByteArray()));
+			return new this.String(bo.toByteArray());
+		}
+		catch(e){
+			probe.createElement("SOAPMessageException", e);
+		}
+	},
+	*/
+
+	_log: function(msg){
+		ms.log(msg);
+	},
+
+	type: "UploadOnBaseAttachmentTax"
+};]]></script>
+        <sys_class_name>ecc_agent_script_include</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-11-03 14:10:44</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>29265f08db96c7400713d5ab5e96198b</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>UploadOnBaseAttachmentTax</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>ecc_agent_script_include_29265f08db96c7400713d5ab5e96198b</sys_update_name>
+        <sys_updated_by>v-hemanthsiramdasu</sys_updated_by>
+        <sys_updated_on>2017-11-08 17:41:16</sys_updated_on>
+    </ecc_agent_script_include>
+</record_update>

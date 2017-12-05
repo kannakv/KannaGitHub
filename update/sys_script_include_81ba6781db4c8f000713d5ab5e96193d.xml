@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_rtp_tax_return_p.taxOnBaseIntUtils</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>taxOnBaseIntUtils</name>
+        <script><![CDATA[var taxOnBaseIntUtils = Class.create();
+taxOnBaseIntUtils.prototype = {
+	initialize: function(SOAPMsg, SOAPFn, type, current) {
+		this.logDebug = gs.getProperty("x_rtp_tax_return_p.onbase_integration_debug_log");	
+		this.SOAPMsg = SOAPMsg;
+		this.SOAPFn = SOAPFn;
+		this.type = type;
+		this.current = current;
+		this.currentObj = current;
+		if(current != ""){
+			this.sourceTable = this.current.getTableName();
+		}
+		this.retryCount = 0;
+		this.maxRetry = parseInt(gs.getProperty("x_rtp_tax_return_p.onbase_integration_max_retry"));
+		this.retryInterval = parseInt(gs.getProperty("x_rtp_tax_return_p.onbase_integration_retry_interval"));
+		this.requestBody = "";
+		this.responseBody = "";
+		this.userName = gs.getProperty("x_rtp_tax_return_p.onbase_integration_username");
+		this.password = gs.getProperty("x_rtp_tax_return_p.onbase_integration_password");
+		this.midServer = gs.getProperty("x_rtp_tax_return_p.onbase_integration_midserver_name");
+		this.midServerParseFlg = false;
+	},
+	
+	sendSOAPMsg: function(){
+		if (gs.getProperty("x_rtp_tax_return_p.onbase_integration_enabled")){
+			var sm, response;
+			sm = new sn_ws.SOAPMessageV2(this.SOAPMsg, this.SOAPFn);
+			sm.setBasicAuth(this.userName, this.password);
+			sm.setMIDServer(this.midServer);
+			var mappings = this._getIntegrationMappings();
+			this._log("***** "+this.SOAPFn+" ==> "+JSON.stringify(mappings)+" *****mapping");
+			//this._log("user "+this.userName+" ==> " + this.password+" debug after mappings");
+			for(var key in mappings){
+				//sm.setStringParameterNoEscape(key, mappings[key]);
+				if (key == "NoticeDate" ||  key == "EffectiveDate")
+					 {
+						 var dats = mappings[key].split("/");
+						 mappings[key] = dats[2] + "-"  + dats[0] + "-" + dats[1];
+						 //this._log("date key  " +key   + " value " + mappings[key]);
+						} 										
+				sm.setStringParameterNoEscape("file." + key ,  mappings[key]);
+			}
+			response = sm.execute();
+			//response.waitForResponse(60);
+			this.requestBody = sm.getRequestBody();
+			//this._log("TAX **1*** request " + response.haveError() + this.requestBody);
+			this.responseBody = response.haveError() ? response.getErrorMessage() : response.getBody();
+			this.status = response.getStatusCode();
+			//this._log("TAX **2*** "+this.SOAPFn+" ==> HTTP Status : "+this.status+" ***** TAX SOAP" +"Response Body  "+this.responseBody );
+			this._log("Tax***** "+this.SOAPFn+" ==> HTTP Status : "+this.status+" *****");
+			this._retryForResponse();
+		}
+		},
+	
+	sendToMIDServer: function(attachmentSysID){
+		if(gs.getProperty("x_rtp_tax_return_p.onbase_integration_enabled")){
+			this.midServerParseFlg = true;
+			var docSysID = this.current.sys_id;
+			var attachmentURL = "https://"+gs.getProperty("instance_name")+".service-now.com/api/now/attachment/"+attachmentSysID+"/file";
+			var sm, response;
+			sm = new sn_ws.SOAPMessageV2(this.SOAPMsg, this.SOAPFn);
+			sm.setBasicAuth(this.userName, this.password);
+			sm.setMIDServer(this.midServer);
+ 			var mappings = this._getIntegrationMappings();
+ 			this._log("TAX**3*** "+this.SOAPFn+" ==> "+JSON.stringify(mappings)+" *****");
+			//this._log("user "+this.userName+" ==> " + this.password+" debug after mappings");
+			for(var key in mappings){
+				 if (key == "NoticeDate" ||  key == "EffectiveDate")
+					 {
+						 var dats = mappings[key].split("/");
+						 mappings[key] = dats[2] + "-"  + dats[0] + "-" + dats[1];
+						 //this._log("date key  " +key   + " value " + mappings[key]);
+						} 
+				sm.setStringParameterNoEscape("file." + key, mappings[key]);
+			}
+			response = sm.execute();
+			this.requestBody = sm.getRequestBody();
+			response.waitForResponse(2160);
+ 			this.responseBody = response.haveError() ? response.getErrorMessage() : response.getBody();
+  			this.status = response.getStatusCode();
+			this._triggerMIDserver(attachmentURL, mappings, docSysID);
+			//this._log("TAX MID SERVER***** "+this.SOAPFn+" ==> HTTP Status : "+this.status+ " message "  +this.responseBody+ " ***** TAX MID");
+			//this._retryForResponse();
+		}
+	},
+	
+	_retryForResponse: function(){
+		if(!this._checkResponseStatus()){
+			while(this.retryCount < this.maxRetry){
+				this.retryCount++;
+				var retryInMs = this.retryInterval * 1000;
+				this.sleep(retryInMs);
+				this.sendSOAPMsg();
+				this.sendToMIDServer();
+			}
+		}
+		if(this.retryCount >= this.maxRetry){
+			this.notifyOnErrorsEmail();
+		}
+	},
+	
+	_checkResponseStatus: function(){
+		var responseStatus = false;
+		//this.insertTransactionHistory("Failure");
+		var action = "";
+		if(this.retryCount > 0){
+			action = "Retry";
+		}
+		//this._log("**c*** "+this.SOAPFn+" ==> Response Body : "+this.responseBody+" *****");
+		var xmlDoc = new XMLDocument2();
+		xmlDoc.parseXML(this.responseBody);
+		var isSuccessful = xmlDoc.getNodeText("//a:Successful");
+		var message = xmlDoc.getNodeText("//a:Message");
+		this._log("TAX ***** "+this.SOAPFn+" ==> isSuccessful : "+isSuccessful+" ***** CHK RESPONSE");
+		if(isSuccessful == "true" || message == "Success"){
+			responseStatus = true;
+			if(this.SOAPFn == "UploadTaxExciseFile"){
+				this.updateOnBaseState(this.currentObj.sys_id);
+				//this.purgeAttachments(this.currentObj.sys_id);
+				this.updateState(this.currentObj.number);
+			}
+			else if(this.SOAPFn == "RetrieveFile"){
+				var fileID = xmlDoc.getNodeText("//a:FileId");
+				var fileName = xmlDoc.getNodeText("//a:FileName");
+				var fileData = xmlDoc.getNodeText("//a:FileData");
+				this.createAttachment(fileID, fileName, fileData);
+				this.updateState(this.currentObj.number);
+			}
+		}
+		else{
+			if(this.SOAPFn == "SetActiveStatus"){
+				this.setActive(this.currentObj.sys_id);
+			}
+		}
+		if(responseStatus){
+			//this.insertTransactionHistory("Success");
+		}
+		return responseStatus;
+	},
+	
+	
+	updateOnBaseState: function(docSysID){
+		//var docRec = new GlideRecord("sys_attachment");
+		var docRec = new GlideRecord("x_rtp_tax_return_p_tax_documents");
+		//docRec.addQuery("table_name", 'x_rtp_tax_return_p_tpf_sv');
+		//docRec.addQuery("table_sys_id", docSysID);
+		docRec.addQuery("sys_id", docSysID);
+		docRec.query();
+		//this._log("TAX***** "+this.SOAPFn+" docRec "+docRec.getEncodedQuery()+" "+docRec.getRowCount()+" *****");
+		if(docRec.next()){
+			docRec.tax_onbase_state = "Submitted";
+			docRec.update();
+			
+		}
+	},
+	
+	setActive: function(docSysID){
+		//var docRec = new GlideRecord("sys_attachment");
+// 		docRec.addQuery("table_name", 'x_rtp_tax_return_p_tpf_sv');
+// 		docRec.addQuery("table_sys_id", docSysID);
+		var docRec = new GlideRecord("x_rtp_tax_return_p_tax_documents");
+		docRec.addQuery("sys_id", docSysID);
+		docRec.query();
+		//this._log("***** "+this.SOAPFn+" docRec "+docRec.getEncodedQuery()+" "+docRec.getRowCount()+" *****");
+		if(docRec.next()){
+			docRec.active = true;
+			docRec.update();
+		}
+	},
+	
+// 	purgeAttachments: function(docSysID){
+// 		var attachRec = new GlideRecord("sys_attachment");
+// 		attachRec.addQuery("table_name", "x_nuvo_eam_documents");
+// 		attachRec.addQuery("table_sys_id", docSysID);
+// 		attachRec.query();
+// 		//this._log("***** "+this.SOAPFn+" attachRec "+attachRec.getEncodedQuery()+" "+attachRec.getRowCount()+" *****");
+// 		if(attachRec.next()){
+// 			attachRec.deleteRecord();
+// 		}
+// 	},
+	
+	createAttachment: function(fileID, fileName, fileData){
+		var contentType = "";
+		var fileNameArr = fileName.split(".");
+		var fileType = fileNameArr[1].toString().toLowerCase();
+		switch(fileType){
+			case "txt":
+			contentType = "text/plain";
+			break;
+			case "pdf":
+			contentType = "application/pdf";
+			break;
+			case "xls":
+			contentType = "application/vnd.ms-excel";
+			break;
+			case "xlsx":
+			contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+			break;
+			case "xlsx":
+			contentType = "application/msword";
+			break;
+			case "docx":
+			contentType = "application/vnd.openxmlformats-officedoc";
+			break;
+			case "jpg":
+			contentType = "image/jpeg";
+			break;
+			case "jpeg":
+			contentType = "image/jpeg";
+			break;
+			case "png":
+			contentType = "image/png";
+			break;
+			case "gif":
+			contentType = "image/gif";
+			break;
+		}
+		//var docRec = new GlideRecord("sys_attachment");
+		var docRec = new GlideRecord("x_rtp_tax_return_p_tax_documents");
+		docRec.addQuery("number", fileID);
+		//docRec.addQuery("table_name", 'x_rtp_tax_return_p_tpf_sv');
+		//docRec.addQuery("table_sys_id", current.sys_id);
+		docRec.query();
+		if(docRec.next()){
+			var attCreator = new GlideRecord('ecc_queue');
+			attCreator.agent = "AttachmentCreator";
+			attCreator.topic = "AttachmentCreator";
+			attCreator.name =  fileName + ":" + contentType;
+			attCreator.source = docRec.getTableName()+":"+docRec.sys_id;
+			attCreator.payload = fileData;
+			attCreator.insert();
+		}
+	},
+	
+	updateState: function(taxSysID){
+		var taxRec = new GlideRecord("x_rtp_tax_return_p_tpf_sv");
+		taxRec.addQuery("sys_id", taxSysID);
+		taxRec.query();
+		//this._log("***** "+this.SOAPFn+" taxRec "+taxRec.getEncodedQuery()+" "+taxRec.getRowCount()+" *****");
+		if(taxRec.next()){
+			taxRec.state = 2;
+			taxRec.update();
+		}
+	},
+	
+	downloadAttachment: function(docSysID){
+		var attachRec = new GlideRecord("sys_attachment");
+		attachRec.addQuery("table_name", "x_rtp_tax_return_p_tax_documents");
+		attachRec.addQuery("table_sys_id", docSysID);
+		attachRec.query();
+		//this._log("***** "+this.SOAPFn+" attachRec "+attachRec.getEncodedQuery()+" "+attachRec.getRowCount()+" *****");
+		if(attachRec.next()){
+			action.setRedirectURL("/sys_attachment.do?sys_id="+attachRec.sys_id);
+		}
+	},
+	
+	updateDownloadCount: function(docSysID){
+		var docRec = new GlideRecord("x_rtp_tax_return_p_tax_documents");
+		docRec.addQuery("sys_id", docSysID);
+		docRec.query();
+		//this._log("***** "+this.SOAPFn+" contractRec "+contractRec.getEncodedQuery()+" "+contractRec.getRowCount()+" *****");
+		if(docRec.next()){
+			var count = docRec.u_download_count;
+			if(count == ""){
+				count = 1;
+			}
+			else{
+				count += 1;
+			}
+			docRec.u_download_count = count;
+			docRec.update();
+		}
+	},
+	
+// 	insertTransactionHistory: function(status){
+// 		var txnHistoryRec = new GlideRecord("x_nuvo_eam_int_transactions_history");
+// 		txnHistoryRec.initialize();
+// 		txnHistoryRec.u_application = this._getSOAPMsgSysID(this.SOAPMsg);
+// 		txnHistoryRec.u_type = this.type;
+// 		txnHistoryRec.u_message = this._getSOAPFnSysID(this.SOAPFn);
+// 		//txnHistoryRec.u_transaction_id = this.current.sys_id;
+// 		txnHistoryRec.u_status = status;
+// 		txnHistoryRec.u_request = this.requestBody;
+// 		txnHistoryRec.u_response = this.responseBody;
+// 		txnHistoryRec.insert();
+// 	},
+	
+	_getSOAPMsgSysID: function(soapMsg){
+		var soapMsgRec = new GlideRecord("sys_soap_message");
+		soapMsgRec.addQuery("name", soapMsg);
+		soapMsgRec.query();
+		if(soapMsgRec.next()){
+			return soapMsgRec.sys_id;
+		}
+		return "";
+	},
+	
+	_getSOAPFnSysID: function(soapFn){
+		var soapFnRec = new GlideRecord("sys_soap_message_function");
+		soapFnRec.addQuery("function_name", soapFn);
+		soapFnRec.query();
+		if(soapFnRec.next()){
+			return soapFnRec.sys_id;
+		}
+		return "";
+	},
+	
+	notifyOnErrorsEmail: function(){
+		this._log("***** "+this.SOAPFn+" ==> Notify on Errors *****");
+		/*var userID = this.current.contract.sys_created_by;
+		var grId = new GlideRecord('sys_user');
+		grId.addQuery('user_name', userID);
+		grId.query();
+		if (grId.next()){*/
+			gs.eventQueue('x_rtp_tax_return_p.onBase_fail_trigger', this.current, gs.getProperty("x_rtp_tax_return_p.onbase_integration_notify_email"), gs.getUserName());
+			//this._log("***** "+this.SOAPFn+" ==> Notify to : "+gs.getProperty("x_rtp_tax_return_p.onbase_integration_notify_email")+" *****");
+		//}
+		
+	},
+	
+	_getIntegrationMappings: function(){
+		var mappings = {};
+		var intMapAgg = new GlideAggregate("x_rtp_tax_return_p_integration_mappings");
+		intMapAgg.addQuery("u_application.name", this.SOAPMsg);
+		intMapAgg.addQuery("u_target_table.function_name", this.SOAPFn);
+		intMapAgg.addQuery("u_active", true);
+		intMapAgg.addQuery("u_type", this.type);
+		intMapAgg.groupBy("u_target_field");
+		intMapAgg.orderBy("u_target_field");
+		intMapAgg.query();
+		//this._log("Integration Mappings " + intMapAgg.getRowCount() + " msg" +this.SOAPMsg + "fn " +this.SOAPFn + " type" +this.type  + "TF" + intMapAgg.u_target_field);
+		
+		while(intMapAgg.next()){		
+			var targetField = intMapAgg.u_target_field.u_variable;
+			if(targetField != "FileData"){
+				//this._log("target field  " +u_target_field);
+							
+				var targetValue = this._getIntegrationValue(intMapAgg.u_target_field);
+				mappings[targetField] = targetValue.toString();
+					}
+			else{
+				mappings[targetField] = this._getIntegrationValue(intMapAgg.u_target_field);
+					}
+					}
+			return mappings;
+		
+	},
+	
+	//Renaming this method by suffixing Old. For the new method refer below - _getIntegrationValue
+	_getIntegrationValue: function(targetField){
+		var intMapRec = new GlideRecord("x_rtp_tax_return_p_integration_mappings");
+		intMapRec.addQuery("u_application.name", this.SOAPMsg);
+		intMapRec.addQuery("u_target_table.function_name", this.SOAPFn);
+		intMapRec.addQuery("u_active", true);
+		intMapRec.addQuery("u_type", this.type);
+		intMapRec.addQuery("u_target_field", targetField);
+		//intMapRec.addQuery("u_source_table", this.sourceTable);
+		intMapRec.query();
+		if(intMapRec.next()){
+			var isDependent = intMapRec.u_dependent;
+			var sourceTable = intMapRec.u_source_table;
+				if(isDependent){
+				var dependentField = intMapRec.u_dependent_field;
+				var dependentValue = this.currentObj[dependentField];
+				var dependentSourceField = intMapRec.u_dependent_source_field;
+				var sourceRec = new GlideRecord(sourceTable);
+				//sourceRec.addQuery(dependentSourceField, dependentValue);
+				sourceRec.addQuery("sys_id", dependentValue);
+				sourceRec.orderByDesc("sys_updated_on");
+				sourceRec.query();
+				if(sourceRec.next()){
+					this.sourceTable = sourceRec.getTableName();
+					this.current = sourceRec;
+				}
+			}
+			else{
+				this.sourceTable = this.currentObj.getTableName();
+				this.current = this.currentObj;
+				}
+			var fieldName = "u_source_field";
+			var sourceField = intMapRec.u_source_field;
+			var customSourceField = intMapRec.u_custom_source_field;
+			var sourceValue = "";
+			var encodedQuery = intMapRec.getEncodedQuery();
+			if(customSourceField != ""){
+				fieldName = "u_custom_source_field";
+				var copySourceField = sourceField;
+				sourceField = customSourceField;
+				if(customSourceField == "base64Data"){
+					var ga = new GlideSysAttachment();
+					var attachRec = new GlideRecord("sys_attachment");
+					attachRec.addQuery("sys_id", this.current[copySourceField]);
+					attachRec.query();
+					if(attachRec.next()){
+						if(!this.midServerParseFlg){
+							return ga.getContentBase64(attachRec);
+						}
+						else{
+							return "$FileData$";
+							
+						}
+					}
+					return "";
+				}
+			}
+			if(sourceField != ""){
+					if(sourceField.indexOf(".") != -1){
+					sourceValue = this._getReferencedValue(sourceField);
+					if(sourceValue != ""){
+						return sourceValue;
+											
+					}
+	
+					/*else{
+						var sourceVal = "";
+						var sourceFieldArr = sourceField.split(".");
+						for(var i=0; i<sourceFieldArr.length; i++){
+							sourceVal += this.current[sourceFieldArr[i]].getDisplayValue() + ".";
+						}
+						sourceVal = sourceVal.substring(0, sourceVal.length-1);
+						this._log("***** "+this.SOAPFn+" "+targetField+" ==> Referenced Value : "+sourceValue+" *****");
+						return sourceVal;
+					}*/
+				}
+				else{
+					sourceValue = this._getSourceValue(sourceField);
+					
+				}
+				
+				var intMapRec1 = new GlideRecord("x_rtp_tax_return_p_integration_mappings");
+				intMapRec1.addEncodedQuery(encodedQuery);
+				intMapRec1.addQuery(fieldName, sourceField);
+				encodedQuery = intMapRec1.getEncodedQuery();
+				intMapRec1.addNotNullQuery("u_source_value");
+				intMapRec1.addQuery("u_source_value", sourceValue);
+				intMapRec1.addQuery("u_default", false);
+				intMapRec1.query();
+				if(intMapRec1.next()){
+					return intMapRec1.u_target_value;
+				}
+			}
+			var intMapRec2 = new GlideRecord("x_rtp_tax_return_p_integration_mappings");
+			intMapRec2.addEncodedQuery(encodedQuery);
+			intMapRec2.addQuery("u_default", true);
+			intMapRec2.query();
+			if(intMapRec2.next()){
+				return intMapRec2.u_target_value.toString();
+			}
+			return sourceValue;
+		}
+	},
+
+	_getSourceValue: function(sourceField){
+		var sourceValue = this.current[sourceField].getDisplayValue();
+		if(sourceField == "sys_created_by" || sourceField == "sys_updated_by"){
+			sourceValue = this._getNameOfUser(sourceValue);
+			}
+		else{
+			var dicRec = new GlideRecord("sys_dictionary");
+			dicRec.addQuery("name", "IN", this._getParentTable(this.sourceTable));
+			dicRec.addQuery("element", sourceField);
+			dicRec.query();
+			if(dicRec.next()){
+				var type = dicRec.internal_type;
+				if(type == "journal_input"){
+					sourceValue = this._getLastJournalEntry(sourceField);
+					}
+				else if(type == "glide_date_time" || type == "datetime"){
+					sourceValue = this.current[sourceField];
+					sourceValue = this._getDateTimeInUTC(sourceValue);
+					}
+			}
+		}
+		return sourceValue;
+	},
+
+	_getReferencedValue: function(sourceField){
+		var sourceFieldArray = sourceField.split(".");
+		var refId = this.current[sourceFieldArray[0]];
+		var refTable = this.sourceTable;
+		for(var i=0; i<sourceFieldArray.length; i++){
+			refTable = this._getReferencedTable(sourceFieldArray[i], refTable);
+			if(refTable != ""){
+				var tblRec = new GlideRecord(refTable);
+				tblRec.addQuery("sys_id", refId);
+				tblRec.query();
+				if(tblRec.next()){
+					refId = tblRec[sourceFieldArray[i+1]];
+					if((i+1) == (sourceFieldArray.length-1)){
+						return tblRec[sourceFieldArray[i+1]].getDisplayValue();
+					}
+				}
+			}
+		}
+	},
+
+	_getReferencedTable: function(sourceField, tblName){
+		var dicRec = new GlideRecord("sys_dictionary");
+		dicRec.addQuery("name", "IN", this._getParentTable(tblName));
+		dicRec.addQuery("element", sourceField);
+		dicRec.query();
+		if(dicRec.next()){
+			return dicRec.reference;
+		}
+		return "";
+	},
+
+	_getParentTable: function(tableName){
+		var tables = this.sourceTable+","+tableName;
+		var runFlg = true;
+		do{
+			var dbObjRec = new GlideRecord("sys_db_object");
+			dbObjRec.addQuery("name", tableName);
+			dbObjRec.query();
+			if(dbObjRec.next()){
+			var parentTable = dbObjRec.super_class.name;
+			if(parentTable != ""){
+					
+					tables += ","+parentTable;
+					tableName = parentTable;
+					}
+				else{
+					runFlg = false;
+				}
+			}
+			else{
+				runFlg = false;
+			}
+		} while(runFlg);
+		return tables;
+	},
+
+	_getNameOfUser: function(userName){
+		var userRec = new GlideRecord("sys_user");
+		userRec.addQuery("user_name", userName);
+		userRec.query();
+		if(userRec.next()){
+			var name = userRec.name;
+			if(name != ""){
+				return name;
+			}
+		}
+		return userName;
+	},
+
+	_getLastJournalEntry: function(fieldName){
+		var journalRec = new GlideRecord("sys_journal_field");
+		journalRec.addQuery("element_id", this.current.sys_id);
+		journalRec.addQuery("name", "IN", this._getParentTable(this.sourceTable));
+		journalRec.addQuery("element", fieldName);
+		journalRec.orderByDesc("sys_created_on");
+		journalRec.query();
+		if(journalRec.next()){
+			return journalRec.value;
+		}
+		return "";
+	},
+
+	_getDateTimeInUTC: function(dt){
+		var nowDateTime = new GlideDateTime().getValue();
+		if(dt != "now"){
+			nowDateTime = dt;
+		}
+		var nowDateTimeArray = nowDateTime.toString().split(" ");
+		var nowDateTimeUTC = nowDateTimeArray.join("T") + "+00:00";
+		return nowDateTimeUTC;
+	},
+	
+	sleep: function(ms){  
+		var nowTime = new Date().getTime();  
+		while(new Date().getTime() < nowTime + ms){
+		}  
+	},
+	
+	getOutputVal: function(outputXML, root, type, name){
+		var xmlDoc = new XMLDocument2();
+		xmlDoc.parseXML(outputXML);
+		if(type == "attribute"){
+			var node = xmlDoc.getFirstNode(root);
+			var attrName = node.getAttribute("name");
+			var attrVal = node.getAttribute("value");
+			
+			if(name == attrName){
+				return attrVal;
+			}
+			var node1 = xmlDoc.getNextNode(node);
+			while(node1){
+				attrName = node1.getAttribute("name");
+				attrVal = node1.getAttribute("value");
+				if(name == attrName){
+					return attrVal;
+				}
+				node1 = xmlDoc.getNextNode(node1);
+			}
+		}
+		else if(type == "node"){
+			var nodeName = "//"+ name;
+			var nodeVal = xmlDoc.getNodeText(nodeName);
+			return nodeVal;
+		}
+		return "";
+	},
+	
+	_triggerMIDserver:function(attachmentURL, mappings, docSysID){
+		var json = new global.JSON();
+		var mappingsTxt = json.encode(mappings);
+		var probeObj = new global.JavascriptProbe('DEVMIDSRV01');
+		probeObj.setName('UploadtaxOnBaseAttachment');
+       	probeObj.setJavascript('var uploadObj = new UploadOnBaseAttachmentTax(); uploadObj.fileUpload();');
+		probeObj.addParameter('username', gs.getProperty("x_rtp_tax_return_p.onbase_attachment_username"));
+		probeObj.addParameter('password', gs.getProperty("x_rtp_tax_return_p.onbase_attachment_password"));
+		probeObj.addParameter('attachmentURL', attachmentURL);
+		probeObj.addParameter('mappings', mappingsTxt);
+		probeObj.addParameter('docSysID', docSysID);
+		probeObj.addParameter('onBaseUsername', this.userName);
+		probeObj.addParameter('onBasePassword', this.password);
+		probeObj.addParameter('endpoint', this._getSOAPFnValue("soap_endpoint"));
+		probeObj.addParameter('action', json.encode(this._getSOAPFnValue("soap_action")));
+		probeObj.addParameter('requestBody', this.requestBody);
+		probeObj.create();
+	},
+	
+	_getSOAPFnValue: function(fieldName){
+		var soapMsgRec = new GlideRecord("sys_soap_message_function");
+		soapMsgRec.addQuery("soap_message.name", this.SOAPMsg);
+		soapMsgRec.addQuery("function_name", this.SOAPFn);
+		soapMsgRec.query();
+		if(soapMsgRec.next()){
+			var val = soapMsgRec[fieldName];
+			return val.toString();
+		}
+		return "";
+	},
+
+	_log: function(msg){
+		if(this.logDebug){
+			gs.info(msg);
+		}
+	},
+
+	type: 'taxOnBaseIntUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-07-17 21:53:12</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>81ba6781db4c8f000713d5ab5e96193d</sys_id>
+        <sys_mod_count>242</sys_mod_count>
+        <sys_name>taxOnBaseIntUtils</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_include_81ba6781db4c8f000713d5ab5e96193d</sys_update_name>
+        <sys_updated_by>v-hemanthsiramdasu</sys_updated_by>
+        <sys_updated_on>2017-11-30 03:30:51</sys_updated_on>
+    </sys_script_include>
+</record_update>

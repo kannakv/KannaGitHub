@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element extends="sys_import_set_row" label="GL Update Table" max_length="40" name="x_rtp_tax_return_p_gl_update_table" type="collection">
+        <element attributes="import_attribute_name=Cost Center,edge_encryption_enabled=true" label="Cost Center" max_length="40" name="u_cost_center" type="string"/>
+        <element attributes="import_attribute_name=Explanation of line item,edge_encryption_enabled=true" label="Explanation of line item" max_length="40" name="u_explanation_of_line_item" type="string"/>
+        <element attributes="import_attribute_name=G/L Account,edge_encryption_enabled=true" label="G/L Account" max_length="40" name="u_g_l_account" type="string"/>
+        <element attributes="import_attribute_name=G/L Account for form,edge_encryption_enabled=true" label="G/L Account for form" max_length="40" name="u_g_l_account_for_form" type="string"/>
+        <element attributes="import_attribute_name=Object Account,edge_encryption_enabled=true" label="Object Account" max_length="40" name="u_object_account" type="string"/>
+        <element attributes="import_attribute_name=Return Type,edge_encryption_enabled=true" label="Return Type" max_length="61" name="u_return_type" type="string"/>
+        <element attributes="import_attribute_name=Sub Account,edge_encryption_enabled=true" label="Sub Account" max_length="40" name="u_sub_account" type="string"/>
+        <element attributes="import_attribute_name=Tax Company,edge_encryption_enabled=true" label="Tax Company" max_length="40" name="u_tax_company" type="string"/>
+        <element attributes="import_attribute_name=Tax States,edge_encryption_enabled=true" label="Tax States" max_length="40" name="u_tax_states" type="string"/>
+    </element>
+</database>

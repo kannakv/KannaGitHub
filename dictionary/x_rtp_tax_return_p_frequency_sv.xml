@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Tax Frequency" max_length="40" name="x_rtp_tax_return_p_frequency_sv" type="collection">
+        <element display="true" label="Tax Frequency" max_length="100" name="tax_frequency" type="string"/>
+    </element>
+</database>

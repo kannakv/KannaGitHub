@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update sys_domain="global" table="sys_script">
+    <sys_script action="INSERT_OR_UPDATE">
+        <abort_action>false</abort_action>
+        <access>package_private</access>
+        <action_delete>false</action_delete>
+        <action_insert>true</action_insert>
+        <action_query>true</action_query>
+        <action_update>true</action_update>
+        <active>true</active>
+        <add_message>false</add_message>
+        <advanced>true</advanced>
+        <change_fields>false</change_fields>
+        <client_callable>false</client_callable>
+        <collection>x_rtp_tax_return_p_tpf_sv</collection>
+        <condition/>
+        <description/>
+        <execute_function>false</execute_function>
+        <filter_condition/>
+        <is_rest>false</is_rest>
+        <message/>
+        <name>Tax_GL_Account_Desc</name>
+        <order>200</order>
+        <priority>100</priority>
+        <rest_method/>
+        <rest_method_text/>
+        <rest_service/>
+        <rest_service_text/>
+        <rest_variables/>
+        <role_conditions/>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+	// Add your code here
+	var gp='';
+	var str=[];
+	var company=current.u_company;
+	var states=current.tax_state;
+	var rtrnDes=current.tax_return_type;
+	var taxGl= new GlideRecord('x_rtp_tax_return_p_gl_matrix');
+	taxGl.addQuery('tax_company',company);
+	taxGl.addQuery('tax_states',states);
+	taxGl.addQuery('return_type',rtrnDes);
+	taxGl.query();
+	while(taxGl.next()) {
+			gp += (',' + taxGl.g_l_account_for_form.toString());
+				}
+	var num=current.sys_id;
+	var company1=current.u_company.getDisplayValue();
+	var states1=current.tax_state.getDisplayValue();
+	var rtrnDes1=current.tax_return_type.getDisplayValue();
+	var taxxGl= new GlideRecord('x_rtp_tax_return_p_gl_account');
+	taxxGl.query();
+	str = gp.split(",");  
+	for (var i = 1; i<str.length; i++) {  
+	taxxGl.tax_company=company1;
+	taxxGl.tax_states=states1;
+	taxxGl.return_description=rtrnDes1;
+	taxxGl.tax_number=num;
+	taxxGl.gl_account_desc=str[i];
+	taxxGl.insert();
+   }
+	
+var testGr = new GlideAggregate('x_rtp_tax_return_p_gl_account'); 
+testGr.query();
+var testGR1;
+ while (testGr.next()) { 
+   testGR1 = new GlideRecord('x_rtp_tax_return_p_gl_account'); 
+   testGR1.addQuery('tax_number', testGr.tax_number); 
+   testGR1.addQuery('tax_company', testGr.tax_company); 
+   testGR1.addQuery('tax_states', testGr.tax_states); 
+   testGR1.addQuery('return_description', testGr.return_description); 
+   testGR1.addQuery('gl_account_desc', testGr.gl_account_desc);
+   testGR1.query(); 
+   testGR1.next(); 
+	while (testGR1.next()) {
+		//gs.addInfoMessage("inside");
+	  testGR1.deleteRecord();
+   } 
+} 
+
+})(current, previous);]]></script>
+        <sys_class_name>sys_script</sys_class_name>
+        <sys_created_by>v-hemanthsiramdasu</sys_created_by>
+        <sys_created_on>2017-11-21 05:52:00</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>19be4e75dba68b80e93fb96c4e9619ec</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>Tax_GL_Account_Desc</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_19be4e75dba68b80e93fb96c4e9619ec</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-11-30 18:06:55</sys_updated_on>
+        <template/>
+        <when>before_display</when>
+    </sys_script>
+    <sys_translated_text action="delete_multiple" query="documentkey=19be4e75dba68b80e93fb96c4e9619ec"/>
+</record_update>

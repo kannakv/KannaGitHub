@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_rtp_tax_return_p.u_popGLAccountDesc</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>u_popGLAccountDesc</name>
+        <script><![CDATA[var u_popGLAccountDesc = Class.create();
+u_popGLAccountDesc.prototype = {
+    initialize: function() {
+    },
+u_popTaxAccDes:function() {
+		var gl = ' ';
+		var c = current.tax_company;
+	gs.debug("compna" +c);
+		var st = current.tax_states;
+		var rt = current.return_description;
+		var grp = new GlideRecord('x_rtp_tax_return_p_gl_matrix');
+		grp.addQuery('tax_company',c);
+		grp.addQuery('tax_states',st);
+		grp.addQuery('return_type',rt);
+		grp.query();
+		while(grp.next()) {
+			if (gl.length > 0) {
+			    //build a comma separated string of groups if there is more than one
+				gl += (',' + grp.sys_id);
+			}
+			else {
+				gl = grp.grp.g_l_account_for_form.toString();
+			}
+			
+		}
+		return 'sys_idIN' + gl;
+	},
+    type: 'u_popGLAccountDesc'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>v-hemanthsiramdasu</sys_created_by>
+        <sys_created_on>2017-11-21 03:43:42</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>d0d27d35db668b80e93fb96c4e9619a0</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>u_popGLAccountDesc</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_include_d0d27d35db668b80e93fb96c4e9619a0</sys_update_name>
+        <sys_updated_by>v-hemanthsiramdasu</sys_updated_by>
+        <sys_updated_on>2017-11-21 05:27:54</sys_updated_on>
+    </sys_script_include>
+</record_update>

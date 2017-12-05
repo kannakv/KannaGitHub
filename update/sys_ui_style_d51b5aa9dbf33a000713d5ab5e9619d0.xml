@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_ui_style">
+    <sys_ui_style action="INSERT_OR_UPDATE">
+        <alt/>
+        <element>u_stage</element>
+        <name>x_rtp_tax_return_p_tpf_sv</name>
+        <style>color:red</style>
+        <sys_class_name>sys_ui_style</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-07-06 19:06:47</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>d51b5aa9dbf33a000713d5ab5e9619d0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_rtp_tax_return_p_tpf_sv</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_ui_style_d51b5aa9dbf33a000713d5ab5e9619d0</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-07-06 19:06:47</sys_updated_on>
+        <value>6</value>
+    </sys_ui_style>
+</record_update>

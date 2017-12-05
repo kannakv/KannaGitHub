@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element attributes="no_attachment=false" audit="true" extends="task" label="Tax Process Flow" max_length="40" name="x_rtp_tax_return_p_tpf_sv" sizeclass="434" type="collection">
+        <element label="attachment" max_length="32" name="attachment" reference="sys_attachment" reference_qual="table_name=x_rtp_tax_return_p_tpf_sv^EQ" reference_qual_condition="table_name=x_rtp_tax_return_p_tpf_sv^EQ" type="reference"/>
+        <element label="Bank Account No" max_length="32" name="bank_account_no" read_only="true" type="string"/>
+        <element active="false" label="Bill of Lading Number" max_length="40" name="bom" type="string"/>
+        <element label="Caller" mandatory="true" max_length="32" name="caller" reference="sys_user" type="reference"/>
+        <element active="false" label="Diversion Number" max_length="40" name="diversion_number" type="string"/>
+        <element choice="1" label="Document Type" max_length="40" name="document_type" type="choice">
+            <choice/>
+        </element>
+        <element label="Draft Date" max_length="40" name="draft_date" type="glide_date"/>
+        <element active="false" label="Effective Date" max_length="40" name="effective_date" type="glide_date"/>
+        <element active="false" label="Form Number" max_length="40" name="form_number" type="string"/>
+        <element choice="1" label="Jurisdiction" max_length="100" name="jurisdiction" type="string">
+            <choice>
+                <element label="AL" sequence="0" value="AL"/>
+                <element label="AR" sequence="1" value="AR"/>
+                <element label="DE" sequence="2" value="DE"/>
+                <element label="US" sequence="3" value="US"/>
+                <element label="FL" sequence="4" value="FL"/>
+                <element label="GA" sequence="5" value="GA"/>
+                <element label="KY" sequence="6" value="KY"/>
+                <element label="LA" sequence="7" value="LA"/>
+                <element label="MD" sequence="8" value="MD"/>
+                <element label="MS" sequence="9" value="MS"/>
+                <element label="NJ" sequence="10" value="NJ"/>
+                <element label="NY" sequence="11" value="NY"/>
+                <element label="NC" sequence="12" value="NC"/>
+                <element label="OK" sequence="13" value="OK"/>
+                <element label="PA" sequence="14" value="PA"/>
+                <element label="SC" sequence="15" value="SC"/>
+                <element label="TN" sequence="16" value="TN"/>
+                <element label="TX" sequence="17" value="TX"/>
+                <element label="VA" sequence="18" value="VA"/>
+            </choice>
+        </element>
+        <element label="Locality" max_length="40" name="locality" type="string"/>
+        <element active="false" label="Notice Date" max_length="40" name="notice_date" type="string"/>
+        <element label="Tax Pmt/Refund" max_length="15" name="payment" type="currency"/>
+        <element label="Preparer Comments" max_length="520" name="preparer_comments" type="string"/>
+        <element choice="1" label="Return type" max_length="40" name="return_type" type="choice">
+            <choice>
+                <element label="Supplier" sequence="1" value="Supplier"/>
+                <element label="Wholesaler" sequence="2" value="Wholesaler"/>
+                <element label="Importer" sequence="3" value="Importer"/>
+                <element label="Exporter" sequence="4" value="Exporter"/>
+                <element label="Distributor" sequence="5" value="Distributor"/>
+                <element label="Environmental" sequence="6" value="Environmental"/>
+                <element label="Inspection Fee" sequence="7" value="Inspection Fee"/>
+                <element label="Load Fee" sequence="8" value="Load Fee"/>
+                <element label="Dealer" sequence="9" value="Dealer"/>
+                <element label="First Receiver" sequence="10" value="First Receiver"/>
+                <element label="Petro Business Tax" sequence="11" value="Petro Business Tax"/>
+                <element label="Blender" sequence="12" value="Blender"/>
+                <element label="Fuel Vendor" sequence="13" value="Fuel Vendor"/>
+                <element label="Sales" sequence="14" value="Sales"/>
+                <element label="Federal 720" sequence="15" value="Federal 720"/>
+                <element label="Federal 2290" sequence="16" value="Federal 2290"/>
+                <element label="Seawall" sequence="17" value="Seawall"/>
+                <element label="Airport Safety Fund" sequence="18" value="Airport Safety Fund"/>
+                <element label="Gross Receipts" sequence="19" value="Gross Receipts"/>
+                <element label="EIA-821" sequence="20" value="EIA-821"/>
+                <element label="EIA-817" sequence="21" value="EIA-817"/>
+            </choice>
+        </element>
+        <element label="Tax Amended" max_length="40" name="tax_amended" type="boolean"/>
+        <element label="Tax prepared by" max_length="32" name="tax_associate_responsible_for" reference="sys_user" reference_qual="roles=x_rtp_tax_return_p.tax_process_flow_user^EQ" reference_qual_condition="roles=x_rtp_tax_return_p.tax_process_flow_user^EQ" type="reference"/>
+        <element label="Return Version" max_length="40" name="tax_description" type="string"/>
+        <element label="Due date" max_length="32" name="tax_due_date" read_only="true" type="string"/>
+        <element label="Frequency" max_length="32" name="tax_frequency" read_only="true" reference="x_rtp_tax_return_p_frequency_sv" type="reference"/>
+        <element label="Payment Required" max_length="40" name="tax_payment_required" type="boolean"/>
+        <element choice="1" label="Tax Period" max_length="40" name="tax_period" type="choice">
+            <choice>
+                <element label="01" sequence="1" value="01"/>
+                <element label="02" sequence="2" value="02"/>
+                <element label="03" sequence="3" value="03"/>
+                <element label="04" sequence="4" value="04"/>
+                <element label="05" sequence="5" value="05"/>
+                <element label="06" sequence="6" value="06"/>
+                <element label="07" sequence="7" value="07"/>
+                <element label="08" sequence="8" value="08"/>
+                <element label="09" sequence="9" value="09"/>
+                <element label="10" sequence="10" value="10"/>
+                <element label="11" sequence="11" value="11"/>
+                <element label="12" sequence="12" value="12"/>
+                <element label="Q1" sequence="13" value="Q1"/>
+                <element label="Q2" sequence="14" value="Q2"/>
+                <element label="Q3" sequence="15" value="Q3"/>
+                <element label="Q4" sequence="16" value="Q4"/>
+                <element label="B1" sequence="17" value="B1"/>
+                <element label="B2" sequence="18" value="B2"/>
+                <element label="Annual" sequence="19" value="Annual"/>
+            </choice>
+        </element>
+        <element label="Return description" mandatory="true" max_length="32" name="tax_return_type" reference="x_rtp_tax_return_p_return_type_sv" reference_qual="javascript:new u_popTaxReturnTypes().u_popTaxReturnTypes()" type="reference" use_reference_qualifier="advanced"/>
+        <element label="Tax Revision" max_length="40" name="tax_revision" read_only="true" type="boolean"/>
+        <element label="Tax state" mandatory="true" max_length="32" name="tax_state" reference="x_rtp_tax_return_p_tax_states_sv" reference_qual="javascript:new u_popTaxstates().u_popTaxstates()" type="reference" use_reference_qualifier="advanced"/>
+        <element choice="1" label="Tax Type" max_length="40" name="tax_type" type="choice">
+            <choice>
+                <element label="Excise" sequence="1" value="excise"/>
+                <element label="Sales" sequence="2" value="sales"/>
+                <element label="Prepaid Sales" sequence="3" value="prepaid_sales"/>
+                <element label="Gross Receipts" sequence="4" value="gross_receipts"/>
+            </choice>
+        </element>
+        <element default="javascript:(new GlideDateTime()). getYearUTC();" label="Tax Year" max_length="40" name="tax_year" type="string"/>
+        <element label="Additional comments" max_length="1500" name="u_additional_comments" type="journal_input"/>
+        <element label="Tax return completed" max_length="40" name="u_all_tax_returns_completed" type="boolean"/>
+        <element label="First level approver" max_length="32" name="u_approved_by_manager" reference="x_rtp_tax_return_p_first_level_approval_sv" type="reference"/>
+        <element label="Second level approver" max_length="32" name="u_approved_by_vp" reference="x_rtp_tax_return_p_second_level_approver_sv" type="reference"/>
+        <element label="Tax Company" mandatory="true" max_length="40" name="u_company" reference="x_rtp_tax_return_p_companies_sv" type="reference"/>
+        <element label="First level rejection" max_length="32" name="u_rejected_by_manager" read_only="true" reference="sys_user" type="reference"/>
+        <element label="Second level rejection" max_length="32" name="u_rejected_by_vp" read_only="true" reference="sys_user" type="reference"/>
+        <element label="Requested by" max_length="32" name="u_requested_by" reference="sys_user" type="reference"/>
+        <element label="Requested date" max_length="40" name="u_requested_date" type="glide_date"/>
+        <element label="Documents attached" max_length="40" name="u_required_documents_attached" type="boolean"/>
+        <element choice="3" default="1" label="Stage" max_length="32" name="u_stage" read_only="true" type="integer">
+            <choice>
+                <element label="Not Started" sequence="0" value="1"/>
+                <element label="Work in Progress" sequence="1" value="2"/>
+                <element label="First Level Approval" sequence="2" value="3"/>
+                <element label="Second Level Approval" sequence="3" value="4"/>
+                <element label="Rejected" sequence="4" value="6"/>
+                <element label="Preparer Confirmation" sequence="5" value="7"/>
+                <element label="Completed" sequence="6" value="9"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Tax process number" max_length="40" name="u_tax_process_number" type="string"/>
+    </element>
+</database>

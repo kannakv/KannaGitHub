@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>false</active>
+        <api_name>x_rtp_tax_return_p.u_taxStageColors</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>u_taxStageColors</name>
+        <script><![CDATA[var u_taxStageColors = Class.create();
+u_taxStageColors.prototype = {
+	initialize: function() {
+	},
+	u_taxStageColors:function() {
+		var a = current.u_stage;
+		if(a == '6'){return true;}
+		else{return false;}						
+	},
+	type: 'u_taxStageColors'
+}
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-06-30 14:38:18</sys_created_on>
+        <sys_customer_update>true</sys_customer_update>
+        <sys_id>25232627dbe736000713d5ab5e961924</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>u_taxStageColors</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_script_include_25232627dbe736000713d5ab5e961924</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-06-30 17:29:13</sys_updated_on>
+    </sys_script_include>
+</record_update>

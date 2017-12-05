@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_soap_message_function">
+    <sys_soap_message_function action="INSERT_OR_UPDATE">
+        <authentication_type/>
+        <basic_auth_password/>
+        <basic_auth_profile/>
+        <basic_auth_user/>
+        <certificate/>
+        <enable_mutual_auth>false</enable_mutual_auth>
+        <envelope><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:ser="http://schemas.datacontract.org/2004/07/ServiceNow_OnbaseService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <tem:UploadNewFile>
+         <!--Optional:-->
+         <tem:file>
+            <ser:City>${file.City}</ser:City>
+            <ser:ContractNumber>${file.ContractNumber}</ser:ContractNumber>
+            <ser:ContractType>${file.ContractType}</ser:ContractType>
+            <ser:CostCenter>${file.CostCenter}</ser:CostCenter>
+            <ser:County>${file.County}</ser:County>
+            <ser:DocumentStatus>${file.DocumentStatus}</ser:DocumentStatus>
+            <ser:FileData>${file.FileData}</ser:FileData>
+            <ser:FileId>${file.FileId}</ser:FileId>
+            <ser:FileName>${file.FileName}</ser:FileName>
+            <ser:IsPublished>${file.IsPublished}</ser:IsPublished>
+            <ser:StoreName>${file.StoreName}</ser:StoreName>
+            <ser:Street>${file.Street}</ser:Street>
+            <ser:Zip>${file.Zip}</ser:Zip>
+         </tem:file>
+      </tem:UploadNewFile>
+   </soapenv:Body>
+</soapenv:Envelope>]]></envelope>
+        <function_name>UploadNewFile</function_name>
+        <key_store/>
+        <key_store_alias/>
+        <key_store_password/>
+        <lock>false</lock>
+        <protocol_profile/>
+        <qualified_name>TaxOnbase [ UploadNewFile ]</qualified_name>
+        <soap_action>http://tempuri.org/IOnBaseService/UploadNewFile</soap_action>
+        <soap_endpoint>https://onbasewebservicedev.corp.racetrac.com/OnBaseService.svc</soap_endpoint>
+        <soap_message display_value="TaxOnbase">367d1f89db0c8f000713d5ab5e96190d</soap_message>
+        <strip_whitespace>false</strip_whitespace>
+        <sys_class_name>sys_soap_message_function</sys_class_name>
+        <sys_created_by>v-kannadhasanamirtha</sys_created_by>
+        <sys_created_on>2017-11-30 16:11:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>be94f6f8dbba03000713d5ab5e9619df</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>UploadNewFile</sys_name>
+        <sys_package display_value="Tax Return Process" source="x_rtp_tax_return_p">9b1e5414db937a000713d5ab5e9619a1</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="Tax Return Process">9b1e5414db937a000713d5ab5e9619a1</sys_scope>
+        <sys_update_name>sys_soap_message_function_be94f6f8dbba03000713d5ab5e9619df</sys_update_name>
+        <sys_updated_by>v-kannadhasanamirtha</sys_updated_by>
+        <sys_updated_on>2017-11-30 16:11:02</sys_updated_on>
+        <use_basic_auth>false</use_basic_auth>
+        <use_mid_server/>
+        <use_ws_security>false</use_ws_security>
+        <ws_security_type/>
+        <ws_security_username_profile/>
+        <ws_security_x509_profile/>
+    </sys_soap_message_function>
+</record_update>

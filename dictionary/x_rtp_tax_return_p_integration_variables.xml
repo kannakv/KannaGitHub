@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <element label="Tax Integration Variables" max_length="40" name="x_rtp_tax_return_p_integration_variables" type="collection">
+        <element default="1" label="Active" max_length="40" name="u_active" type="boolean"/>
+        <element choice="1" label="Application" max_length="32" name="u_application" reference="sys_soap_message" type="reference">
+            <choice/>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Message" max_length="32" name="u_message" reference="sys_soap_message_function" type="reference">
+            <choice/>
+        </element>
+        <element display="true" label="Variable" max_length="100" name="u_variable" type="string"/>
+        <index name="index">
+            <element name="u_application"/>
+        </index>
+        <index name="index2">
+            <element name="u_message"/>
+        </index>
+    </element>
+</database>
